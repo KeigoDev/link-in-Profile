@@ -11,10 +11,8 @@
   --accent-light: #6e273b;
   --border: #cdd3dd;
 
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI",
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
     Helvetica, Arial, sans-serif;
-
   color: var(--text);
   background: var(--background);
   -webkit-font-smoothing: antialiased;
@@ -50,17 +48,16 @@ body {
   transform-origin: center 70%;
 }
 
+/* Larger circle: 176px at the default font size. */
 .portrait-ring {
-  width: 8.875rem;
-  height: 8.875rem;
+  width: min(11rem, 65vw);
+  height: min(11rem, 65vw);
   padding: 5px;
   margin: 0 auto 1.3rem;
   border: 1px solid #b68b99;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow:
-    0 8px 28px #20242b12,
-    0 0 0 5px #6e273b06;
+  box-shadow: 0 8px 28px #20242b12, 0 0 0 5px #6e273b06;
   transform:
     perspective(700px)
     rotateX(var(--portrait-x, 0deg))
@@ -77,14 +74,15 @@ body {
   background: #e5e8ed;
 }
 
+/* Crop for the new portrait: face and glasses stay visible. */
 .portrait img {
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: 490%;
+  top: 0;
+  width: 145%;
   max-width: none;
   height: auto;
-  transform: translate(-29.5%, -48%);
+  transform: translate(-54%, -8%);
 }
 
 h1 {
@@ -130,52 +128,42 @@ h1 {
   gap: 1rem;
   min-height: 6rem;
   padding: 1.125rem 1.25rem;
-
   color: var(--text);
   text-decoration: none;
   border: 1px solid var(--border);
   border-radius: 1rem;
   background: var(--surface);
   box-shadow: 0 4px 16px #20242b08;
-
   transition:
     transform .22s ease,
     box-shadow .28s ease,
     border-color .28s ease,
     background-color .28s ease;
-
   -webkit-tap-highlight-color: #6e273b18;
   touch-action: manipulation;
   cursor: pointer;
   transform-style: preserve-3d;
-
   transform:
     perspective(900px)
     translate3d(0, var(--hover-lift, 0px), 0)
-    rotateX(
-      calc(var(--tilt-x, 0deg) + var(--scroll-rotate, 0deg))
-    )
+    rotateX(calc(var(--tilt-x, 0deg) + var(--scroll-rotate, 0deg)))
     rotateY(var(--tilt-y, 0deg))
-    scale(
-      calc(var(--scroll-scale, 1) * var(--press-scale, 1))
-    );
-
+    scale(calc(var(--scroll-scale, 1) * var(--press-scale, 1)));
   transform-origin: center;
 }
 
+/* Soft color glow follows the mouse through script.js. */
 .link-card::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-
   background: radial-gradient(
     220px circle at var(--glow-x, 50%) var(--glow-y, 50%),
     var(--glow-color, #9c3f6312),
     transparent 75%
   );
-
   opacity: var(--glow-opacity, 0);
   transition: opacity .3s ease;
 }
@@ -199,7 +187,6 @@ h1 {
   background: #e9edf2;
   color: #434e5b;
   transform: translateZ(14px);
-
   transition:
     background-color .22s ease,
     border-color .22s ease,
@@ -255,12 +242,10 @@ svg {
   height: 1.15rem;
   flex: 0 0 1.15rem;
   color: #596574;
-
-  transition:
-    transform .22s ease,
-    color .22s ease;
+  transition: transform .22s ease, color .22s ease;
 }
 
+/* Each button gets its own gentle hover color. */
 .social-card {
   --surface-hover: #f6e4eb;
   --hover-border: #9c496b;
@@ -354,14 +339,13 @@ svg {
   border: 0;
 }
 
+/* Mouse and trackpad hover effects. */
 @media (hover: hover) and (pointer: fine) {
   .link-card:hover {
     --hover-lift: -3px;
     --glow-opacity: 1;
-
     background: var(--surface-hover);
     border-color: var(--hover-border, #6e273b);
-
     box-shadow:
       0 9px 24px #20242b14,
       0 0 0 1px var(--hover-border, #6e273b);
@@ -381,10 +365,7 @@ svg {
   .portfolio:hover {
     background: #864058;
     border-color: #6e273b;
-
-    box-shadow:
-      0 9px 24px #50253930,
-      0 0 0 1px #6e273b;
+    box-shadow: 0 9px 24px #50253930, 0 0 0 1px #6e273b;
   }
 
   .portfolio:hover .link-icon {
@@ -398,17 +379,14 @@ svg {
   }
 }
 
+/* Gentle 3D entrance animations. */
 @media (prefers-reduced-motion: no-preference) {
   .portrait-ring {
-    animation:
-      portrait-arrive .85s cubic-bezier(.2, .7, .25, 1)
-      backwards;
+    animation: portrait-arrive .85s cubic-bezier(.2, .7, .25, 1) backwards;
   }
 
   .link-scene {
-    animation:
-      card-arrive .85s cubic-bezier(.2, .7, .25, 1)
-      backwards;
+    animation: card-arrive .85s cubic-bezier(.2, .7, .25, 1) backwards;
   }
 
   .link-scene:nth-child(1) { animation-delay: .12s; }
@@ -426,7 +404,6 @@ svg {
       opacity: 0;
       translate: 0 10px;
     }
-
     to {
       opacity: 1;
       translate: 0 0;
@@ -436,18 +413,11 @@ svg {
   @keyframes card-arrive {
     from {
       opacity: 0;
-      transform:
-        translate3d(0, 22px, -70px)
-        rotateX(15deg)
-        scale(.96);
+      transform: translate3d(0, 22px, -70px) rotateX(15deg) scale(.96);
     }
-
     to {
       opacity: 1;
-      transform:
-        translate3d(0, 0, 0)
-        rotateX(0deg)
-        scale(1);
+      transform: translate3d(0, 0, 0) rotateX(0deg) scale(1);
     }
   }
 
@@ -460,7 +430,6 @@ svg {
         rotateY(-16deg)
         scale(.92);
     }
-
     to {
       opacity: 1;
       transform:
@@ -472,6 +441,7 @@ svg {
   }
 }
 
+/* Respect the visitor's reduced-motion preference. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -500,9 +470,10 @@ svg {
     margin-bottom: 1.75rem;
   }
 
+  /* 160px circle on phones, with room for narrow screens. */
   .portrait-ring {
-    width: 8rem;
-    height: 8rem;
+    width: min(10rem, 65vw);
+    height: min(10rem, 65vw);
   }
 
   .link-card {
